@@ -1,66 +1,37 @@
-async function obtenerTiposDeCambio() {
-    try {
-        const response = await fetch('https://mindicador.cl/api');
-        const data = await response.json();
+/*aqui me toma los datos*/
 
-        if (data && data.dolar) {
-            return data;
-        } else {
-            throw new Error('Error en la respuesta de la API');
+    function tomarDatos() {
+        let pesos = parseFloat(document.getElementById("pesos").value);
+        let moneda = document.getElementById("moneda").value;
+    
+        // Verificar si el valor en pesos es un número válido
+        if (isNaN(pesos) || pesos <= 0) {
+            document.getElementById("mensajeDeError").innerText = "Ingresa otro valor";
+            document.getElementById("valor").innerText = "Resultado: ";
+            return;
         }
-    } catch (error) {
-        mostrarError('Error al obtener los tipos de cambio: ' + error.message);
+    
+        // Limpiar mensajes de error
+        document.getElementById("mensajeDeError").innerText = "";
+    
+        /*conversión*/
+        let resultado;
+        switch (moneda) {
+            case "usd":
+                resultado = pesos * 0.0013;
+                break;
+            case "ars":
+                    resultado = pesos * 1.12272;
+            case "eur":
+                resultado = pesos * 0.0011;
+            case "gbp":
+                resultado = pesos * 0.0009;
+                break;
+            default:
+                resultado = "Error de calculo en la moneda";
+        }
+    
+        /*no me esta tomando el mensaje de error*/
+        document.getElementById("valor").innerText = "Resultado: " + resultado.toFixed(2) + " " + moneda.toUpperCase();
     }
-}
-
-function realizarConversion() {
-    var cantidad = parseFloat(document.getElementById('pesos').value);
-    var moneda = document.getElementById('moneda').value;
-    var resultadoElement = document.getElementById('valor');
-
-    obtenerTiposDeCambio()
-        .then(data => {
-            var tasaCambio = (moneda === 'CLP') ? 1 : data[moneda].valor;
-            var resultado = cantidad / tasaCambio;
-
-            // Mostrar el resultado en el DOM
-            resultadoElement.innerText = cantidad + ' pesos chilenos equivalen a ' + resultado.toFixed(2) + ' ' + moneda;
-
-            // Llamar a la función para dibujar el gráfico
-            dibujarGrafico(data);
-        });
-}
-
-function mostrarError(mensaje) {
-    var resultadoElement = document.getElementById('valor');
-    resultadoElement.innerText = 'Error: ' + mensaje;
-}
-
-function dibujarGrafico(data) {
-    var ctx = document.getElementById('grafico').getContext('2d');
-
-    // Supongamos que solo queremos graficar el dólar y el euro
-    var labels = ['Dólar (USD)', 'Euro (EUR)'];
-    var valores = [data.usd.valor, data.eur.valor];
-
-    var chart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Tasa de Cambio',
-                data: valores,
-                backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)'],
-                borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)'],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-}
+    

@@ -1,34 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conversor de monedas</title>
     <link rel="stylesheet" href="./assets/css/styless.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
 </head>
 <body>
-    <h1>Conversor de Monedas Nacional</h1>
+    <main>
+        <h1>Conversor de Monedas Nacional</h1>
+    </main>
     <div class="cuadro">
         <h2>Pesos CLP</h2>
             
-        <input type="number" id="pesos">
+        <input type="text" id="pesos"> <!-- 1er id -->
             
         <h3>Moneda a convertir:</h3>
             
-        <select id="moneda">
-            <option value="usd">Dólar (USD)</option>
+        <select id="moneda"> <!-- 2da id -->
             <option value="eur">Euro (EUR)</option>
+            <option value="ars">Peso Argentino (ARS)</option>
+            <option value="usd">Dólar (USD)</option>
             <option value="gbp">Libra (GBP)</option>
         </select>
                 
-        <button type="button" id="convertirbtn">Buscar</button>
+        <button onclick="tomarDatos()">Buscar</button> <!-- 3er id -->
 
             
-        <p id="valor">Resultado: </p>
+        <p id="valor">Resultado: </p> <!-- 4to id -->
+
         <!-- buscar manera de agregar el gráfico -->
+        <canvas></canvas>
+        
+        <div class="error" id="mensajeDeError"></div>
     </div>
 
     <script src="./assets/js/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
