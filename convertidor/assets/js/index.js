@@ -4,14 +4,12 @@
         let pesos = parseFloat(document.getElementById("pesos").value);
         let moneda = document.getElementById("moneda").value;
     
-        // Verificar si el valor en pesos es un número válido
         if (isNaN(pesos) || pesos <= 0) {
             document.getElementById("mensajeDeError").innerText = "Ingresa otro valor";
             document.getElementById("valor").innerText = "Resultado: ";
             return;
         }
     
-        // Limpiar mensajes de error
         document.getElementById("mensajeDeError").innerText = "";
     
         /*conversión*/
@@ -28,10 +26,12 @@
                 resultado = pesos * 0.0009;
                 break;
             default:
-                resultado = "Error de calculo en la moneda";
+                resultado = "Error de calculo";
         }
     
         /*no me esta tomando el mensaje de error*/
         document.getElementById("valor").innerText = "Resultado: " + resultado.toFixed(2) + " " + moneda.toUpperCase();
     }
     
+
+/*observacion... lograr realizar el grafico con el div canvas*/
